@@ -165,7 +165,6 @@ int output_pin(led_t* led){
 
 int set_state_pin(led_t* led){
     FILE * handle;
-    int nWritten;
     char cad[28] = {0};
 
     strcpy(cad, led->path);

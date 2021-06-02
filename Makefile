@@ -1,12 +1,12 @@
 CC := gcc
 OPTIONS = -g -Wall
-OBJS = ej6tp10.o portlib.o
+OBJS = tp12.o portlib.o
 
-ej6tp10: ${OBJS}
-	${CC} ${OPTIONS} ${OBJS} -o ej6tp10
+tp12: ${OBJS}
+	${CC} ${OPTIONS} ${OBJS} -o tp12
 
-ej6tp10.o: ej6tp10.c portlib.h
-	${CC} ${OPTIONS} -c  ej6tp10.c
+tp12.o: tp12.c portlib.h
+	${CC} ${OPTIONS} -c  tp12.c
 
 portlib.o: portlib.c portlib.h
 	${CC} ${OPTIONS} -c portlib.c
