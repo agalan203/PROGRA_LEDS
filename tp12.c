@@ -81,11 +81,11 @@ int main(void){
 
     }while (finish != 1); 
 
-    for(i = 0; i <= 7; i++){
+    /*for(i = 0; i <= 7; i++){
         if(unexport_pin(arrled[i]) == -1){
             return -1;
         }
-    }
+    }*/
 
     return 0;
 }
