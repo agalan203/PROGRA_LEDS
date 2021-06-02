@@ -126,7 +126,6 @@ int bitGet (char port, uint16_t bit_nr){
             printf("Puerto inexistente");
             break;
     }
-    printf("%d\n",thebit);                                      //imprime el estado del bit y lo devuelve
     return thebit;
 }
 
