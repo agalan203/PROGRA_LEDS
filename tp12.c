@@ -70,6 +70,7 @@ int main(void){
 
         for(i = 0; i <= 7; i++){
             arrled[i] -> value = bitGet('A',i);
+            printf("%d",arrled[i] -> value);
         }
 
         for(i = 0; i <= 7; i++){
@@ -140,11 +141,10 @@ int unexport_pin(led_t* led){
 int output_pin(led_t* led){
     FILE * handle_direction;
     int nWritten;
-    char cad[32] = {0};
+    char cad[33] = {0};
 
     strcpy(cad, led->path);
     strcat(cad, "direction");
-
 
     if ((handle_direction = fopen(cad,"w")) == NULL){
         printf("Cannot open DIRECTION File");
@@ -165,7 +165,7 @@ int output_pin(led_t* led){
 
 int set_state_pin(led_t* led){
     FILE * handle;
-    char cad[28] = {0};
+    char cad[29] = {0};
 
     strcpy(cad, led->path);
     strcat(cad, "value");
