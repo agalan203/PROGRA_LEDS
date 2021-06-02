@@ -23,9 +23,9 @@ int main(void){
     led_t led0 = {"17", 0, "/sys/class/gpio/gpio17/"};
     led_t led1 = {"4", 0, "/sys/class/gpio/gpio4/"};
     led_t led2 = {"18", 0, "/sys/class/gpio/gpio18/"};
-    led_t led3 = {"23", 0, "/sys/class/gpio/gpio23/"};
-    led_t led4 = {"24", 0, "/sys/class/gpio/gpio24/"};
-    led_t led5 = {"25", 0, "/sys/class/gpio/gpio25/"};
+    led_t led3 = {"1", 0, "/sys/class/gpio/gpio23/"};
+    led_t led4 = {"12", 0, "/sys/class/gpio/gpio24/"};
+    led_t led5 = {"16", 0, "/sys/class/gpio/gpio25/"};
     led_t led6 = {"22", 0, "/sys/class/gpio/gpio22/"};
     led_t led7 = {"27", 0, "/sys/class/gpio/gpio27/"};
 
