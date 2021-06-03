@@ -35,13 +35,13 @@ int main(void){
     led_t* arrled[8] = {&led0, &led1, &led2, &led3, &led4, &led5, &led6, &led7};
 
     for(i = 0; i <= 7; i++){
-        if(export_pin(arrled[i]) == -1){
+        if(export_pin(arrled[i]) == 1){
             return -1;
         }
     }
 
     for(i = 0; i <= 7; i++){
-        if(output_pin(arrled[i]) == -1){
+        if(output_pin(arrled[i]) == 1){
             return -1;
         }
     }
@@ -72,7 +72,7 @@ int main(void){
                     arrled[i] -> value = (bitGet('A',i))+'0';
                 }
                 for(i = 0; i <= 7; i++){
-                    if(set_state_pin(arrled[i]) == -1){
+                    if(set_state_pin(arrled[i]) == 1){
                         return -1;
                     }
                 }
@@ -81,7 +81,7 @@ int main(void){
                     arrled[i] -> value = '0';
                 }
                 for(i = 0; i <= 7; i++){
-                    if(set_state_pin(arrled[i]) == -1){
+                    if(set_state_pin(arrled[i]) == 1){
                         return -1;
                     }
                 }
@@ -99,7 +99,7 @@ int main(void){
         }
 
         for(i = 0; i <= 7; i++){
-            if(set_state_pin(arrled[i]) == -1){
+            if(set_state_pin(arrled[i]) == 1){
                 return -1;
             }
         }
@@ -107,7 +107,7 @@ int main(void){
     }while (finish != 1); 
 
     for(i = 0; i <= 7; i++){
-        if(unexport_pin(arrled[i]) == -1){
+        if(unexport_pin(arrled[i]) == 1){
             return -1;
         }
     }
@@ -198,7 +198,7 @@ int set_state_pin(led_t* led){
     
     if((fputc(led->value,handle))==-1){
         printf("Clr_Pin: Cannot write to file. Try again later.\n");
-        return -1;
+        return 1;
     }
 
     fclose(handle);
