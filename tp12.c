@@ -5,7 +5,7 @@
 
 typedef struct {
     char* number; //numero pin
-    unsigned int value; //0 o 1
+    char value; //0 o 1
     char* path; //direccion del puerto
 }led_t;
 
@@ -20,14 +20,14 @@ int main(void){
     int i;
     int input = 0;
     int finish = 0;
-    led_t led0 = {"17", 0, "/sys/class/gpio/gpio17/"};
-    led_t led1 = {"4", 0, "/sys/class/gpio/gpio4/"};
-    led_t led2 = {"18", 0, "/sys/class/gpio/gpio18/"};
-    led_t led3 = {"23", 0, "/sys/class/gpio/gpio23/"};
-    led_t led4 = {"24", 0, "/sys/class/gpio/gpio24/"};
-    led_t led5 = {"25", 0, "/sys/class/gpio/gpio25/"};
-    led_t led6 = {"22", 0, "/sys/class/gpio/gpio22/"};
-    led_t led7 = {"27", 0, "/sys/class/gpio/gpio27/"};
+    led_t led0 = {"17", '0', "/sys/class/gpio/gpio17/"};
+    led_t led1 = {"4", '0', "/sys/class/gpio/gpio4/"};
+    led_t led2 = {"18", '0', "/sys/class/gpio/gpio18/"};
+    led_t led3 = {"23", '0', "/sys/class/gpio/gpio23/"};
+    led_t led4 = {"24", '0', "/sys/class/gpio/gpio24/"};
+    led_t led5 = {"25", '0', "/sys/class/gpio/gpio25/"};
+    led_t led6 = {"22", '0', "/sys/class/gpio/gpio22/"};
+    led_t led7 = {"27", '0', "/sys/class/gpio/gpio27/"};
 
     led_t* arrled[8] = {&led0, &led1, &led2, &led3, &led4, &led5, &led6, &led7};
 
@@ -69,8 +69,7 @@ int main(void){
         }
 
         for(i = 0; i <= 7; i++){
-            arrled[i] -> value = bitGet('A',i);
-            printf("%d",arrled[i] -> value);
+            arrled[i] -> value = (bitGet('A',i))+'0';
         }
 
         for(i = 0; i <= 7; i++){
@@ -81,110 +80,115 @@ int main(void){
 
     }while (finish != 1); 
 
-    /*for(i = 0; i <= 7; i++){
+    for(i = 0; i <= 7; i++){
         if(unexport_pin(arrled[i]) == -1){
             return -1;
         }
-    }*/
+    }
 
     return 0;
 }
 
 int export_pin(led_t* led){
-    FILE *handle_export;
-    int nWritten;
 
-    if ((handle_export = fopen("/sys/class/gpio/export","w")) == NULL){
+    /******************************************************/
+    FILE *handle_export;
+
+    if((handle_export = fopen("/sys/class/gpio/export","w+"))==NULL){
         printf("Cannot open EXPORT File. Try again later.\n");
-        return -1;
+        return 1;
     }
-    
-    nWritten=fputs(led->number,handle_export);
-    
-    if (nWritten==-1){
-        printf ("Cannot EXPORT PIN . Try again later.\n");
-        return -1;
+
+    if((fputs(led->number,handle_export))==-1){
+        printf ("Cannot EXPORT PIN. Try again later.\n");
+        return 1;
     }
     else{
        printf("EXPORT File opened succesfully \n"); 
     }
 
     fclose(handle_export);
+    /******************************************************/
 
     return 0;
 }
 
 int unexport_pin(led_t* led){
-    FILE *handle_unexport;
-    int nWritten;
 
-    if ((handle_unexport = fopen("/sys/class/gpio/unexport","w")) == NULL){
+    /******************************************************/
+    FILE *handle_export;
+
+    if((handle_export = fopen("/sys/class/gpio/unexport","w+"))==NULL){
         printf("Cannot open UNEXPORT File. Try again later.\n");
-        return -1;
+        return 1;
     }
-    
-    nWritten=fputs(led->number,handle_unexport);
-    
-    if (nWritten==-1){
-        printf ("Cannot UNEXPORT PIN . Try again later.\n");
-        return -1;
+
+    if((fputs(led->number,handle_export))==-1){
+        printf ("Cannot UNEXPORT PIN. Try again later.\n");
+        return 1;
     }
     else{
        printf("UNEXPORT File opened succesfully \n"); 
     }
 
-    fclose(handle_unexport);
-
+    fclose(handle_export);
+    /******************************************************/
+    
     return 0;
 }
 
 int output_pin(led_t* led){
+
+    /******************************************************/
     FILE * handle_direction;
-    int nWritten;
     char cad[33] = {0};
 
     strcpy(cad, led->path);
     strcat(cad, "direction");
-
-    if ((handle_direction = fopen(cad,"w")) == NULL){
-        printf("Cannot open DIRECTION File");
-        return -1;
+    
+    if((handle_direction = fopen(cad,"w+"))==NULL){
+        printf("Cannot open DIRECTION File. Try again later.\n");
+        return 1;
     }
-    // Set pin Direction
-    if ((nWritten=fputs("out", handle_direction)) == -1){
-        printf("Cannot open DIRECTION pin. Try again later.\n");
-        return -1;
+
+    if((fputs("out",handle_direction))==-1){
+        printf ("Cannot open DIRECTION pin. Try again later.\n");
+        return 1;
     }
     else{
         printf("DIRECTION File for PIN opened succesfully\n");
     }
+  
     fclose(handle_direction);
+    /******************************************************/
 
     return 0;
 }
 
 int set_state_pin(led_t* led){
+    
+    /******************************************************/
     FILE * handle;
     char cad[29] = {0};
 
     strcpy(cad, led->path);
     strcat(cad, "value");
-    
-    if ((handle = fopen(cad,"w")) == NULL){
+
+    if((handle = fopen(cad,"w+"))==NULL){
         printf("Cannot open device. Try again later.\n");
-        return -1;
+        return 1;
     }
-    else{
-        printf("Device successfully opened\n");
-    }
-    if(fputc(led->value ,handle)==-1){
+    
+    if((fputc(led->value,handle))==-1){
         printf("Clr_Pin: Cannot write to file. Try again later.\n");
         return -1;
     }
     else{
-        printf("Write to file %s successfully done.\n", cad);
+        printf("Write to file VALUE successfully done.\n");
     }
+
     fclose(handle);
+    /******************************************************/
 
     return 0;
 }

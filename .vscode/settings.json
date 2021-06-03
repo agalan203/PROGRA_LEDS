@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "tp12": "c"
+        "*.msa": "m6800-as0",
+        "tp12": "c",
+        "portlib.h": "c"
     }
 }
